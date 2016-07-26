@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="MySQL - Exchange@localhost" uuid="509b0532-a329-4236-a069-3b85534300fb">
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <schema-pattern>Exchange.*</schema-pattern>
+      <default-schemas>Exchange.*</default-schemas>
+    </data-source>
+  </component>
+</project>
