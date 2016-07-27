@@ -1,20 +1,36 @@
 package com.lic.exchange.dao;
 
 import com.lic.exchange.bean.UserEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+
+import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Created by lichong on 16/7/25.
  */
 @Repository
-public interface UserDao extends JpaRepository<UserEntity, Integer> {
-    @Modifying
-    @Transactional
-    @Query("update UserEntity set name=:qName where id=:qId")
-    public void updateUser(@Param("qName") String name, @Param("qId") int id);
+public class UserDao {
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    public UserEntity findUserById(int id) {
+        String sql = "select * from user where id = ?";
+        final UserEntity userEntity = new UserEntity();
+        jdbcTemplate.query(sql, new Object[]{1}, new RowCallbackHandler() {
+            @Override
+            public void processRow(ResultSet resultSet) throws SQLException {
+                userEntity.setPhone(resultSet.getString("phone"));
+            }
+        });
+        return userEntity;
+    }
+
+    public void saveOrUpdateUser(int id) {
+
+    }
 }
